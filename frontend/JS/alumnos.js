@@ -1,4 +1,4 @@
-const formulario = document.querySelector("#formAlumno")
+const formulario = document.querySelector("#formulario")
 const mensaje = document.querySelector("#mensaje")
 const listaAlumnos = document.querySelector("#listaAlumnos")
 let alumnoEditandoId = null
@@ -10,11 +10,17 @@ const btnGuardar = document.querySelector("#btnGuardar")
 formulario.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const nombre = document.querySelector("#nombreAlumno").value.trim()
+    const nombre = document.querySelector("#nombre").value.trim()
     const carrera = document.querySelector("#carrera").value.trim()
+    const correo = document.querySelector("#correo").value.trim()
 
-    if (nombre === "" || carrera === "") {
+    if (nombre === "" || carrera === "" || correo === "") {
         mostrarMensaje("Todos los campos son obligatorios", "mje-error")
+        return
+    }
+
+    if (!correo.includes("@")) {
+        mostrarMensaje("Ingrese un correo electrónico válido", "mje-error")
         return
     }
 
@@ -29,7 +35,8 @@ formulario.addEventListener("submit", function (event) {
         const alumno = {
             id: Date.now(),
             nombre: nombre,
-            carrera: carrera
+            carrera: carrera,
+            correo: correo
         }
         alumnos.push(alumno)
         mostrarMensaje("Alumno guardado correctamente", "mje-exito")
@@ -37,13 +44,15 @@ formulario.addEventListener("submit", function (event) {
         const alumno = alumnos.find(alumno => alumno.id === alumnoEditandoId)
         alumno.nombre = nombre
         alumno.carrera = carrera
+        alumno.correo = correo
 
         const datosActuales = {
             nombre: nombre,
-            carrera: carrera
+            carrera: carrera,
+            correo: correo
         }
-        if (JSON.stringify(datosActuales) === JSON.stringify(alumnoEditar)) {
-            mostrarMensaje("No se realizaron cambios", "mje-error")
+        if (JSON.stringify(datosActuales) === JSON.stringify(alumnoEditar)){
+            mostrarMensaje("No se realizaron cambios", "mje-adv")
             return
         }
 
@@ -53,18 +62,16 @@ formulario.addEventListener("submit", function (event) {
 
         mostrarMensaje("Alumno actualizado correctamente", "mje-exito")
     }
-
     guardarDatos("alumnos", alumnos)
+
     mostrarAlumnos(alumnos)
     formulario.reset()
-    btnCancelar.style.display = "none"
 });
 
 
 function obtenerAlumnos() {
     return obtenerDatos("alumnos")
 }
-
 
 function mostrarAlumnos(alumnos) {
     listaAlumnos.innerHTML = ""
@@ -74,6 +81,7 @@ function mostrarAlumnos(alumnos) {
             <td>${alumno.id}</td>
             <td>${alumno.nombre}</td>
             <td>${alumno.carrera}</td>
+            <td>${alumno.correo}</td>
             <td>
                 <button 
                 class="btn-editar" 
@@ -98,14 +106,12 @@ function eliminarAlumno(id) {
     const alumnosActualizados = alumnos.filter(
         alumno => alumno.id !== id
     );
-    guardarDatos("alumnos", alumnosActualizados)
+    localStorage.setItem("alumnos", JSON.stringify(alumnosActualizados))
     mostrarAlumnos(alumnosActualizados)
-    if (alumnoEditandoId === id) {
+    if (alumnoEditandoId === id){
         formulario.reset()
         alumnoEditandoId = null
-        alumnoEditar = null
-        btnGuardar.textContent = "Guardar Alumno"
-        btnCancelar.style.display = "none"
+        btnGuardar.textContent = "Guardar alumno"
     }
     mostrarMensaje("Alumno eliminado correctamente", "mje-exito")
 }
@@ -116,7 +122,7 @@ listaAlumnos.addEventListener("click", (e) => {
         const id = Number(boton_el.dataset.id)
         const confirmar = confirm("¿Está seguro de eliminar este alumno?")
         if (confirmar) {
-            eliminarAlumno(id)
+        eliminarAlumno(id)
         }
     }
     const boton_ed = e.target.closest(".btn-editar")
@@ -129,27 +135,30 @@ listaAlumnos.addEventListener("click", (e) => {
 function editarAlumno(id) {
     const alumnos = obtenerAlumnos()
     const alumno = alumnos.find(alumno => alumno.id === id)
-    document.querySelector("#nombreAlumno").value = alumno.nombre;
+    document.querySelector("#nombre").value = alumno.nombre;
     document.querySelector("#carrera").value = alumno.carrera;
+    document.querySelector("#correo").value = alumno.correo;
 
     alumnoEditar = {
         nombre: alumno.nombre,
-        carrera: alumno.carrera
+        carrera: alumno.carrera,
+        correo: alumno.correo
     }
 
     alumnoEditandoId = id;
+    btnCancelar.style.display ="inline-block"
+
     btnGuardar.textContent = "Actualizar Alumno"
-    btnCancelar.style.display = "inline-block"
-    document.querySelector("#nombreAlumno").focus()
+    document.querySelector("#nombre").focus()
 }
 
-function cancelarEdicion() {
+function cancelarEdicion(){
     formulario.reset()
     alumnoEditandoId = null
     alumnoEditar = null
     btnGuardar.textContent = "Guardar Alumno"
     btnCancelar.style.display = "none"
-    document.querySelector("#nombreAlumno").focus()
+    document.querySelector("#nombre").focus()
 }
 
 btnCancelar.addEventListener("click", cancelarEdicion)
