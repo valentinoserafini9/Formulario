@@ -1,6 +1,7 @@
-const alumnos = require("../data/alumnos")
+const Alumno = require("../models/Alumno")
 
-function obtenerAlumnos(req, res){
+async function obtenerAlumnos(req, res){
+    const alumnos = await Alumno.find()
     res.json(alumnos)
 }
 
@@ -37,7 +38,7 @@ function actualizarAlumno(req, res) {
     const alumno = alumnos.find(alumno => alumno.id === id)
     if (!alumno){
       return  res.status(404).json({
-            mensaje: "Alumno no encontrado"
+            mensaje: "Alumno no econtrado"
         })
     }
     alumno.id = req.body.id
@@ -52,7 +53,7 @@ function eliminarAlumno(req, res) {
     const alumno = alumnos.find(a => a.id === id)
     if (!alumno){
         return  res.status(404).json({
-            mensaje: "Alumno no encontrado"
+            mensaje: "Alumno no econtrado"
         })
     }
     const alumnosActualizados = alumnos.filter(alumno => alumno.id !== id)
