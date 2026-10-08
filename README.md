@@ -4,86 +4,56 @@ Proyecto desarrollado durante la materia Programación IV.
 
 ## Descripción
 
-El Sistema de Gestión Académica (SGA) es una aplicación web que permitirá administrar alumnos, docentes, cursos y materias.
+Aplicación para administrar alumnos y docentes. El proyecto conserva el frontend original, incorpora una API REST con Express y MongoDB para alumnos, y agrega el frontend de prácticas React + Vite utilizado en clase.
 
-Durante el desarrollo del proyecto se incorporarán progresivamente nuevas tecnologías y funcionalidades.
+## Estructura
 
+- `backend/`: API de alumnos, modelos Mongoose y conexión a MongoDB.
+- `frontend/`: sitio clásico; el módulo de alumnos consume la API y docentes conserva el almacenamiento local.
+- `frontend-react/`: aplicación React con ejercicios de componentes, estado y `useEffect`.
 
-## Objetivos
+## Requisitos
 
-- Gestionar alumnos.
-- Gestionar docentes.
-- Gestionar cursos.
-- Gestionar materias.
-- Implementar autenticación de usuarios.
-- Consumir una API REST.
-- Persistir la información en MongoDB.
+- Node.js y npm.
+- MongoDB local o una instancia accesible mediante `MONGO_URI`.
 
+## Ejecutar el backend
+
+Desde `backend/`, instalar dependencias, copiar `.env.example` como `.env` y ejecutar:
+
+```powershell
+npm install
+Copy-Item .env.example .env
+npm run dev
+```
+
+El servidor usa `PORT=3000` y `MONGO_URI=mongodb://127.0.0.1:27017/SGA` en la configuración de ejemplo. No subir el archivo `.env`; contiene configuración local.
+
+La API de alumnos está disponible en `http://localhost:3000/alumnos`.
+
+## Ejecutar el frontend React
+
+Desde `frontend-react/`:
+
+```powershell
+npm ci
+npm run dev
+```
+
+El servidor de Vite muestra la URL local en la consola.
+
+## Frontend clásico
+
+Abrir `frontend/index.html` con Live Server. El backend debe estar iniciado para listar y administrar alumnos. El módulo de docentes continúa usando `localStorage`.
 
 ## Tecnologías
 
-Actualmente:
-
-- HTML5
-- JavaScript
-- CSS
-- express
-- Node.js
-- MongoDB
-
-
-Próximamente:
-- React
-
-
-## Estado del proyecto
-
-- Versión: 
-Clase 12 - Estructura actual
-SGA/
-frontend
- ├── index.html
- ├── alumnos.html
- ├── docentes.html
- │
- ├── css/
- │   └── estilos.css
- │
- └── js/
-      ├── alumnos.js
-      └── docentes.js
-backend
-
-## Estado actual
-- Página de inicio y navegación entre módulos
-- Módulo alumnos docentes
-- CRUD alumnos/docentes
-- Validaciones de formularios
-- Persistencia mediante localStorage
-- Organización del código y refactorización
-- Separación inicial entre Frontend y Backend
-- Implementación de validaciones para los datos recibidos mediante req.body
-- Uso de status 400 para datos inválidos
-- status 404 para alumno no encontrado
-- status 201 para registrar nuevo alumno
-- Manejo básico de errores en la operaciones del CRUD.
-- Instalación de mongoose
-- Creación de la conexión con MongoDB en config/database.js
-- Creación del Schema y modelo Alumno
-- Reemplazo del array en memoria por una colección de MongoDB
-- Modificación de GET /alumnos para consultar MongoDB mediante mongoose
-- Prueba de la API con datos almacenados en MongoDB
-
-
-## Almacenamiento
-
-- localStorage
-- JSON.stringify()
-- JSON.parse()
-- MongoDB
+- HTML, CSS y JavaScript.
+- React 19 y Vite.
+- Node.js, Express y Mongoose.
+- MongoDB.
 
 ## Autor
 
 Valentino Serafini
-
 Programación IV

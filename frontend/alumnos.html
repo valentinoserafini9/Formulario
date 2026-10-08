@@ -6,7 +6,6 @@
         <link rel="stylesheet" href="CSS/estilos.css">
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-        <script src="JS/storage.js" defer></script>
         <script src="JS/ui.js" defer></script>
         <script src="JS/alumnos.js" defer></script>
         <title>SGA - Alumnos</title>
@@ -25,16 +24,20 @@
                 <h2>Alta de Alumno</h2>
                 <form id="formulario">
                     <div class="campo">
+                        <label for="legajo">Legajo</label>
+                        <input type="number" id="legajo" min="1" step="1" required>
+                    </div>
+                    <div class="campo">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre">
+                        <input type="text" id="nombre" required>
                     </div>
                     <div class="campo">
                         <label for="carrera">Carrera</label>
-                        <input type="text" id="carrera">
+                        <input type="text" id="carrera" required>
                     </div>
                     <div class="campo">
                         <label for="correo">Correo electrónico</label>
-                        <input type="text" id="correo">
+                        <input type="email" id="correo" required>
                     </div>
                     <div class="acciones-form">
                     <button type="submit" id="btnGuardar">Guardar Alumno</button>
@@ -47,7 +50,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Legajo</th>
                             <th>Nombre</th>
                             <th>Carrera</th>
                             <th>Correo</th>
