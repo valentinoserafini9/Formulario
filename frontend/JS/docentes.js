@@ -1,11 +1,7 @@
 const formulario = document.querySelector("#formDocente")
-const mensaje = document.querySelector("#mensaje")
+const mensaje = document.querySelector("#mensajeDocente")
 const listaDocentes = document.querySelector("#listaDocentes")
 let docenteEditandoId = null
-let docenteEditar = null
-const btnCancelar = document.querySelector("#btnCancelarDocente")
-btnCancelar.style.display = "none"
-const btnGuardar = document.querySelector("#btnGuardarDocente")
 
 formulario.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -45,33 +41,20 @@ formulario.addEventListener("submit", function (event) {
         docente.nombre = nombre
         docente.especialidad = especialidad
         docente.correo = correo
-
-        const datosActuales = {
-            nombre: nombre,
-            especialidad: especialidad,
-            correo: correo
-        }
-        if (JSON.stringify(datosActuales) === JSON.stringify(docenteEditar)) {
-            mostrarMensaje("No se realizaron cambios", "mje-error")
-            return
-        }
-
         docenteEditandoId = null
-        docenteEditar = null
-        btnGuardar.textContent = "Guardar Docente"
+        formulario.querySelector("button").textContent = "Guardar Docente"
 
         mostrarMensaje("Docente actualizado correctamente", "mje-exito")
     }
-
+    // localStorage.setItem("docentes", JSON.stringify(docentes))
     guardarDatos("docentes", docentes)
     mostraDocentes(docentes)
     formulario.reset()
-    btnCancelar.style.display = "none"
 });
 
 
 function obtenerDocentes() {
-    return obtenerDatos("docentes")
+  return obtenerDatos("docentes")
 }
 
 
@@ -102,20 +85,17 @@ function mostraDocentes(docentes) {
         `;
     }
 }
-
 function eliminarDocente(id) {
     const docentes = obtenerDocentes()
     const docentesActualizados = docentes.filter(
         docente => docente.id !== id
     );
-    guardarDatos("docentes", docentesActualizados)
+    localStorage.setItem("docentes", JSON.stringify(docentesActualizados))
     mostraDocentes(docentesActualizados)
-    if (docenteEditandoId === id) {
+    if (docenteEditandoId === id){
         formulario.reset()
         docenteEditandoId = null
-        docenteEditar = null
-        btnGuardar.textContent = "Guardar Docente"
-        btnCancelar.style.display = "none"
+        formulario.querySelector("button").textContent = "Guardar docente"
     }
     mostrarMensaje("Docente eliminado correctamente", "mje-exito")
 }
@@ -126,7 +106,7 @@ listaDocentes.addEventListener("click", (e) => {
         const id = Number(boton_el.dataset.id)
         const confirmar = confirm("¿Está seguro de eliminar este docente?")
         if (confirmar) {
-            eliminarDocente(id)
+        eliminarDocente(id)
         }
     }
     const boton_ed = e.target.closest(".btn-editar")
@@ -139,32 +119,13 @@ listaDocentes.addEventListener("click", (e) => {
 function editarDocente(id) {
     const docentes = obtenerDocentes()
     const docente = docentes.find(docente => docente.id === id)
-    document.querySelector("#nombreDocente").value = docente.nombre;
+    document.querySelector("#nombre").value = docente.nombre;
     document.querySelector("#especialidad").value = docente.especialidad;
     document.querySelector("#correo").value = docente.correo;
-
-    docenteEditar = {
-        nombre: docente.nombre,
-        especialidad: docente.especialidad,
-        correo: docente.correo
-    }
-
     docenteEditandoId = id;
-    btnGuardar.textContent = "Actualizar Docente"
-    btnCancelar.style.display = "inline-block"
-    document.querySelector("#nombreDocente").focus()
+    formulario.querySelector("button").textContent = "Actualizar Docente"
+    document.querySelector("#nombre").focus()
 }
-
-function cancelarEdicion() {
-    formulario.reset()
-    docenteEditandoId = null
-    docenteEditar = null
-    btnGuardar.textContent = "Guardar Docente"
-    btnCancelar.style.display = "none"
-    document.querySelector("#nombreDocente").focus()
-}
-
-btnCancelar.addEventListener("click", cancelarEdicion)
 
 const docentes = obtenerDocentes()
-mostraDocentes(docentes)
+mostraDocentes(docentes)  

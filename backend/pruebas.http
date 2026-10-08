@@ -1,33 +1,37 @@
-### Obtener todos los alumnos
 GET http://localhost:3000/alumnos
 
 ###
-### Crear un alumno nuevo
+GET http://localhost:3000/alumnos/1002
+
+###
 POST http://localhost:3000/alumnos
 Content-Type: application/json
 
 {
-    "legajo": 101,
-    "nombre": "Lucía",
-    "carrera": "Programación",
-    "correo": "lucia@mail.com"
+    "legajo": 1023,
+    "nombre": "Ramón",
+    "carrera": "Sistemas",
+    "correo": "ramon@mail.com"
 }
-
 ###
-### Obtener un alumno puntual (por legajo)
-GET http://localhost:3000/alumnos/101
-
-###
-### Actualizar ese alumno
-PUT http://localhost:3000/alumnos/101
+PUT http://localhost:3000/alumnos/1002
 Content-Type: application/json
 
 {
-    "nombre": "Lucía Fernández",
+    "nombre": "Juan Carlos",
     "carrera": "Programación",
-    "correo": "lucia.fernandez@mail.com"
+    "correo": "juan@mail.com"
 }
 
 ###
-### Eliminar ese alumno
-DELETE http://localhost:3000/alumnos/101
+DELETE http://localhost:3000/alumnos/1021
+
+###
+POST http://localhost:3000/alumnos
+Content-Type: application/json
+
+{
+    "id": 5,
+    "nombre": "Rocío",
+    "carrera": "Programación"
+}

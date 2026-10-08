@@ -1,24 +1,24 @@
-const Alumno = require("../models/Alumno")
+const Alumno = require("../models/Alumno") 
 
-async function obtenerAlumnos(req, res) {
+async function obtenerAlumnos(req, res) { 
     const alumnos = await Alumno.find()
-    res.json(alumnos)
+    res.json(alumnos) 
 }
 
 async function obtenerAlumno(req, res) {
-    const alumno = await Alumno.findOne({
+    const alumno = await Alumno.findOne({ 
         legajo: Number(req.params.id)
-    })
-    if (!alumno) {
+    }) 
+    if (!alumno) { 
         return res.status(404).json({
             mensaje: "Alumno no encontrado"
         })
     }
-    res.json(alumno)
+    res.json(alumno) 
 }
 
 async function crearAlumno(req, res) {
-    const { legajo, nombre, carrera, correo } = req.body
+    const { legajo, nombre, carrera, correo } = req.body 
     if (!legajo || !nombre || !carrera || !correo) {
         return res.status(400).json({
             mensaje: "Todos los campos son obligatorios"
@@ -34,45 +34,49 @@ async function crearAlumno(req, res) {
             mensaje: "El legajo debe ser un número"
         })
     }
-    const existe = await Alumno.findOne({ legajo })
-    if (existe) {
+    const existe = await Alumno.findOne({ 
+        legajo
+    })
+    if (existe) { 
         return res.status(400).json({
             mensaje: "El legajo ya existe"
         })
     }
-    const nuevoAlumno = await Alumno.create({
+    const nuevoAlumno = await Alumno.create({ 
         legajo,
         nombre,
         carrera,
         correo
     })
-    res.status(201).json(nuevoAlumno)
+    res.status(201).json(nuevoAlumno) 
 }
 
 async function actualizarAlumno(req, res) {
     const { nombre, carrera, correo } = req.body
-    const alumno = await Alumno.findOneAndUpdate(
-        { legajo: Number(req.params.id) },
-        { nombre, carrera, correo },
-        { returnDocument: "after" }
+    const alumno = await Alumno.findOneAndUpdate( 
+        { legajo: Number(req.params.id) }, 
+        { nombre, carrera, correo }, 
+        { returnDocument: "after" } 
     )
     if (!alumno) {
         return res.status(404).json({
-            mensaje: "Alumno no encontrado"
+            mensaje: "Alumno no econtrado"
         })
     }
+
     res.json(alumno)
 }
 
 async function eliminarAlumno(req, res) {
-    const alumno = await Alumno.findOneAndDelete({
-        legajo: Number(req.params.id)
-    })
+    const alumno = await Alumno.findOneAndDelete( 
+        { legajo: Number(req.params.id) } 
+    )
     if (!alumno) {
         return res.status(404).json({
-            mensaje: "Alumno no encontrado"
+            mensaje: "Alumno no econtrado"
         })
     }
+
     res.json({ mensaje: "Alumno eliminado correctamente" })
 }
 
@@ -82,4 +86,4 @@ module.exports = {
     crearAlumno,
     actualizarAlumno,
     eliminarAlumno
-}
+} 

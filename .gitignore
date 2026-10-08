@@ -1,8 +1,8 @@
-# Editor
+# Visual Studio Code
 .vscode/
 
-# Environment variables
+# Variables de entorno
 .env
 
-# Dependencies
+# Node.js
 node_modules/

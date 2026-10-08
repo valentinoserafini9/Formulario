@@ -1,13 +1,12 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose") 
 
-async function conectarBD() {
-    const uri = process.env.MONGO_URI
-    if (!uri) {
-        throw new Error("Falta configurar MONGO_URI en el archivo .env")
+async function conectarBD(){
+    try {
+        await mongoose.connect(process.env.MONGO_URI) 
+        console.log("Base de datos conectada")
+    } catch (error) {
+        console.log(error)
     }
-
-    await mongoose.connect(uri)
-    console.log("Base de datos conectada")
 }
 
 module.exports = conectarBD

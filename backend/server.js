@@ -1,31 +1,31 @@
-require("dotenv").config()
+require("dotenv").config() 
 
-const express = require("express")
+const express = require("express") 
 const cors = require("cors")
-const app = express()
 
-app.use(express.json())
-app.use(cors())
-
-const alumnosRoutes = require("./routes/alumnos.routes")
-app.use("/alumnos", alumnosRoutes)
 const conectarDB = require("./config/database")
+const alumnosRoutes = require("./routes/alumnos.routes") 
 
-const port = Number(process.env.PORT || 3000)
-if (!Number.isInteger(port) || port < 1 || port > 65535) {
-    throw new Error("PORT debe ser un número entre 1 y 65535")
-}
+const app = express() 
 
-async function iniciarServidor() {
-    try {
-        await conectarDB()
-        app.listen(port, () => {
-            console.log(`Servidor funcionando en http://localhost:${port}`)
-        })
-    } catch (error) {
-        console.error("No se pudo iniciar el servidor:", error)
-        process.exitCode = 1
-    }
-}
+app.use(express.json()) 
+app.use(cors()) 
+app.use("/alumnos", alumnosRoutes) 
 
-iniciarServidor()
+const PORT = process.env.PORT 
+
+conectarDB() 
+
+console.log("Ejecutado con nodemon")
+
+app.listen(PORT, () => { 
+    console.log(`Servidor funcionando en http://localhost:${PORT}`)
+})
+
+
+// Creo un middleware
+// app.use((req, res, next) => {
+//     console.log(req.method)
+//     console.log(req.url)
+//     next()
+// })
