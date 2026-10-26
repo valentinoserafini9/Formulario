@@ -1,26 +1,21 @@
-import { useEffect, useState } from "react"
+import Alumnos from "./pages/Alumnos"
+import {FAQ} from "./pages/FAQ"
+import {Routes, Route} from "react-router-dom"
+import LayoutPpal from "./layouts/LayoutPpal"
+import Inicio from "./pages/Inicio"
+
 
 function App()
 {
-const [nombre, setNombre] = useState("")
-
-useEffect(() => {
-  if (nombre){
-    document.title = `Hola ${nombre}`
-  } else {
-    document.title = `Mi aplicación`
-    }
-}, [nombre])
 
 return (
-   <>
-  <input 
-  value = {nombre}
-  onChange={(e) => setNombre(e.target.value)}
-  placeholder="Escribí tu nombre"
-  />
-  <h2>Hola {nombre} </h2>
-   </>
+   <Routes>
+    <Route path="/" element={<LayoutPpal />}>
+    <Route index element={<Inicio />} />
+    <Route path="alumnos" element={<Alumnos />} />
+    <Route path="ayuda" element={<FAQ />} />
+    </Route>
+  </Routes>
   )
 }
 export default App
