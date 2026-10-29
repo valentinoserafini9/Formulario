@@ -14,6 +14,8 @@ function validar(formulario) {
     const errores = {}
     if (formulario.codigo.trim() === "") {
         errores.codigo = "El código es obligatorio"
+    } else if (!/[a-z]/i.test(formulario.codigo)) {
+        errores.codigo = "El código debe contener al menos una letra"
     }
     if (formulario.nombre.trim() === "") {
         errores.nombre = "El nombre es obligatorio"
@@ -144,6 +146,7 @@ function FormularioMateria({ onMateriaGuardada, materiaEditar, onCancelar }){
                     onChange={manejarCambio}
                     error={Boolean(errores.codigo)}
                     helperText={errores.codigo}
+                    slotProps={{ htmlInput: { maxLength: 15 } }}
                     required
                     fullWidth
                 />
@@ -155,6 +158,7 @@ function FormularioMateria({ onMateriaGuardada, materiaEditar, onCancelar }){
                     onChange={manejarCambio}
                     error={Boolean(errores.nombre)}
                     helperText={errores.nombre}
+                    slotProps={{ htmlInput: { maxLength: 100 } }}
                     required
                     fullWidth
                 />
@@ -194,6 +198,7 @@ function FormularioMateria({ onMateriaGuardada, materiaEditar, onCancelar }){
                     onChange={manejarCambio}
                     error={Boolean(errores.descripcion)}
                     helperText={errores.descripcion}
+                    slotProps={{ htmlInput: { maxLength: 300 } }}
                     multiline
                     minRows={2}
                     fullWidth

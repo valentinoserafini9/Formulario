@@ -16,6 +16,9 @@ function validarMateria({ codigo, nombre, descripcion, cargaHoraria, estado }) {
     if (codigo.trim() === "") {
         return "El código no puede estar vacío"
     }
+    if (!/[a-z]/i.test(codigo)) {
+        return "El código debe contener al menos una letra"
+    }
     if (typeof nombre !== "string" || nombre.trim() === "") {
         return "El nombre no puede estar vacío"
     }

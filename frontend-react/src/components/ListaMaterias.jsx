@@ -21,7 +21,7 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria,
             if (!respuesta.ok) {
                 throw new Error(datos?.mensaje || `No se pudo eliminar. Estado HTTP: ${respuesta.status}`)
             }
-            onMateriaEliminada(`Materia ${materia.codigo} eliminada correctamente`)
+            onMateriaEliminada(materia.codigo, `Materia ${materia.codigo} eliminada correctamente`)
         } catch (error) {
             console.error("Error al eliminar: ", error)
             onError(error instanceof TypeError

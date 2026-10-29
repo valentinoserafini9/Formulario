@@ -10,8 +10,17 @@ const [aviso, setAviso] = useState(null)
 
 function operacionExitosa(mensaje) {
   setActualizar(valor => valor + 1)
-  setMateriaEditar(null)
   setAviso({ tipo: "success", mensaje })
+}
+
+function materiaGuardada(mensaje) {
+  setMateriaEditar(null)
+  operacionExitosa(mensaje)
+}
+
+function materiaEliminada(codigo, mensaje) {
+  setMateriaEditar(actual => actual?.codigo === codigo ? null : actual)
+  operacionExitosa(mensaje)
 }
 
 function mostrarError(mensaje) {
@@ -31,13 +40,13 @@ return (
     </Alert>
    )}
    <FormularioMateria key={materiaEditar?.codigo ?? "nuevo"}
-   onMateriaGuardada={operacionExitosa}
+   onMateriaGuardada={materiaGuardada}
    materiaEditar={materiaEditar}
    onCancelar={() => setMateriaEditar(null)}
    />
    <ListaMaterias
    actualizar={actualizar}
-   onMateriaEliminada={operacionExitosa}
+   onMateriaEliminada={materiaEliminada}
    onEditarMateria={seleccionarMateria}
    onError={mostrarError}
    />

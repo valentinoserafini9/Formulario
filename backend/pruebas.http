@@ -120,6 +120,28 @@ Content-Type: application/json
     "estado": "activa"
 }
 
+### 6c. Registrar con código numérico (400)
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": 123,
+    "nombre": "Matemática",
+    "cargaHoraria": 64,
+    "estado": "activa"
+}
+
+### 6d. Registrar con código sin letras (400)
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "123",
+    "nombre": "Matemática",
+    "cargaHoraria": 64,
+    "estado": "activa"
+}
+
 ### 7. Registrar sin nombre (400)
 POST http://localhost:3000/materias
 Content-Type: application/json

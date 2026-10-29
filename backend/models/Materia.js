@@ -7,7 +7,11 @@ const materiaSchema = new mongoose.Schema({
         unique: true,
         trim: true,
         uppercase: true,
-        maxlength: [15, "El código no puede superar los 15 caracteres"]
+        maxlength: [15, "El código no puede superar los 15 caracteres"],
+        validate: {
+            validator: valor => /[a-z]/i.test(valor),
+            message: "El código debe contener al menos una letra"
+        }
     },
     nombre: {
         type: String,
