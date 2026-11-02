@@ -50,6 +50,16 @@ Content-Type: application/json
     "correo": "rocio@mail.com"
 }
 
+###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@sga.com",
+    "password":"ClaveDePrueba123!"
+}
+
+
 ### ===================== MATERIAS =====================
 
 ### 1. Consultar todas las materias (colección vacía)
