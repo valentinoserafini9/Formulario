@@ -1,9 +1,17 @@
 import { AppBar, Box, Container, IconButton, Link, Stack, Toolbar, Typography } from "@mui/material"
 import HelpOutlineRoundedIcon from "@mui/icons-material/HelpOutlineRounded"
-import { Link as RouterLink } from "react-router-dom"
+import { Link as RouterLink, useNavigate } from "react-router-dom"
 import SelectorTema from "./SelectorTema";
 
 export default function Header() {
+    const navigate = useNavigate()
+
+    function cerrarSesion() {
+        localStorage.removeItem("token")
+        localStorage.removeItem("usuario")
+        navigate("/login", { replace: true })
+    }
+
     return (
         <AppBar
             component="header"
@@ -105,6 +113,16 @@ export default function Header() {
                             sx={{ px: { xs: 1, sm: 1.5 }, py: 1, borderRadius: 2, "&:hover": { bgcolor: "action.hover" } }}
                         >
                             Materias
+                        </Link>
+                        <Link
+                            component="button"
+                            type="button"
+                            onClick={cerrarSesion}
+                            color="text.primary"
+                            underline="none"
+                            sx={{ px: { xs: 1, sm: 1.5 }, py: 1, borderRadius: 2, font: "inherit", "&:hover": { bgcolor: "action.hover" } }}
+                        >
+                            Salir
                         </Link>
                         <IconButton
                             component={RouterLink}
