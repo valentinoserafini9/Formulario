@@ -18,7 +18,7 @@ async function crearUsuario() {
         password: hash,
         rol: "admin"
     })
-    await usuario.save()
+    await usuario.save() // Guardar el usuario en la base de datos
 
     console.log("Usuario de prueba creado correctamente")
     console.log("Email:", email)

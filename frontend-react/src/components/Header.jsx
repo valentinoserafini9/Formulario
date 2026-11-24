@@ -1,15 +1,17 @@
-import { AppBar, Box, Container, IconButton, Link, Stack, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Button, Container, IconButton, Link, Stack, Toolbar, Typography } from "@mui/material"
 import HelpOutlineRoundedIcon from "@mui/icons-material/HelpOutlineRounded"
-import { Link as RouterLink, useNavigate } from "react-router-dom"
-import SelectorTema from "./SelectorTema";
+import { Link as RouterLink } from "react-router-dom"
+import SelectorTema from "./SelectorTema"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../context/useAuth"
 
 export default function Header() {
+    const { cerrarSesion } = useAuth()
     const navigate = useNavigate()
 
-    function cerrarSesion() {
-        localStorage.removeItem("token")
-        localStorage.removeItem("usuario")
-        navigate("/login", { replace: true })
+    const logout = () => {
+        cerrarSesion()
+        navigate("/login")
     }
 
     return (
@@ -114,16 +116,6 @@ export default function Header() {
                         >
                             Materias
                         </Link>
-                        <Link
-                            component="button"
-                            type="button"
-                            onClick={cerrarSesion}
-                            color="text.primary"
-                            underline="none"
-                            sx={{ px: { xs: 1, sm: 1.5 }, py: 1, borderRadius: 2, font: "inherit", "&:hover": { bgcolor: "action.hover" } }}
-                        >
-                            Salir
-                        </Link>
                         <IconButton
                             component={RouterLink}
                             to="/ayuda"
@@ -133,6 +125,15 @@ export default function Header() {
                         >
                             <HelpOutlineRoundedIcon />
                         </IconButton>
+                        <Button
+                            type="button"
+                            color="inherit"
+                            variant="outlined"
+                            onClick={logout}
+                            sx={{ textTransform: "none", fontWeight: 600 }}
+                            >
+                                Cerrar sesión
+                            </Button>
                         <SelectorTema />
                     </Stack>
                 </Toolbar>

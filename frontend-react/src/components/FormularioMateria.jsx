@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Alert, Box, Button, MenuItem, Paper, TextField, Typography } from "@mui/material"
+import { useAuth } from "../context/useAuth"
 const API_MATERIAS = "http://localhost:3000/materias"
 
 const FORMULARIO_VACIO = {
@@ -37,6 +38,7 @@ function validar(formulario) {
 }
 
 function FormularioMateria({ onMateriaGuardada, materiaEditar, onCancelar }){
+    const { token } = useAuth()
     const [formulario, setFormulario] = useState({
         codigo: materiaEditar?.codigo ?? "",
         nombre: materiaEditar?.nombre ?? "",
@@ -87,7 +89,7 @@ function FormularioMateria({ onMateriaGuardada, materiaEditar, onCancelar }){
         try {
             const respuesta = await fetch(url, {
                 method: editando ? "PUT" : "POST",
-                headers: {"Content-Type":"application/json"},
+                headers: {"Content-Type":"application/json", Authorization: `Bearer ${token}`},
                 body: JSON.stringify(materia)
             })
             const datos = await respuesta.json().catch(() => null)

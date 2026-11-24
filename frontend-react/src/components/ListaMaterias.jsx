@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Alert, Box, Button, Chip, Paper, Stack, Typography } from "@mui/material"
+import { useAuth } from "../context/useAuth"
 
 const API_MATERIAS = "http://localhost:3000/materias"
 
@@ -7,6 +8,7 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria,
     const [materias, setMaterias] = useState([])
     const [cargando, setCargando] = useState(true)
     const [error, setError] = useState("")
+    const { token } = useAuth()
 
     async function eliminarMateria(materia){
         const confirmar = window.confirm(`¿Seguro que querés eliminar la materia ${materia.codigo} - ${materia.nombre}?`)
@@ -15,7 +17,11 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria,
         }
         try {
             const respuesta = await fetch(`${API_MATERIAS}/${encodeURIComponent(materia.codigo)}`,
-                { method: "DELETE" }
+                { method: "DELETE",
+                  headers: {
+                    Authorization: `Bearer ${token}`
+                  }
+                 }
             )
             const datos = await respuesta.json().catch(() => null)
             if (!respuesta.ok) {
@@ -35,7 +41,9 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria,
             setError("")
 
             try {
-                const respuesta = await fetch(API_MATERIAS)
+                const respuesta = await fetch(API_MATERIAS, {
+                    headers: {Authorization: `Bearer ${token}`}
+                })
 
                 if (!respuesta.ok){
                     throw new Error(`No se pudo obtener la lista. Estado HTTP: ${respuesta.status}`)
