@@ -1,0 +1,47 @@
+### Login con el usuario admin (copiar el token de la respuesta)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@sga.com",
+    "password": "claveAdmin123"
+}
+
+###
+@token = PEGAR_ACA_EL_TOKEN
+
+### Prueba 1 - Crear curso
+POST http://localhost:3000/cursos
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "codigo": "CUR001",
+    "nombre": "Programación Web",
+    "descripcion": "Desarrollo de aplicaciones web",
+    "duracion": 64
+}
+
+### Prueba 2 - Obtener curso por código
+GET http://localhost:3000/cursos/CUR001
+Authorization: Bearer {{token}}
+
+### Prueba 2 - Actualizar curso
+PUT http://localhost:3000/cursos/CUR001
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "codigo": "CUR001",
+    "nombre": "Programación Web II",
+    "descripcion": "Desarrollo de aplicaciones web",
+    "duracion": 80
+}
+
+### Prueba 3 - Eliminar curso
+DELETE http://localhost:3000/cursos/CUR001
+Authorization: Bearer {{token}}
+
+### Verificar que el curso ya no aparece
+GET http://localhost:3000/cursos
+Authorization: Bearer {{token}}
