@@ -1,0 +1,24 @@
+### Paso 1 - Login con el usuario admin (ejecutar primero)
+# @name login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@sga.com",
+    "password": "claveAdmin123"
+}
+
+###
+@token = PEGAR_ACA_EL_TOKEN
+
+### Paso 2 - Crear curso
+POST http://localhost:3000/cursos
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "codigo": "CUR001",
+    "nombre": "Programación Web",
+    "descripcion": "Desarrollo de aplicaciones web",
+    "duracion": 64
+}
