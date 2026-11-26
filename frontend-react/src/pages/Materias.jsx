@@ -2,11 +2,13 @@ import { ListaMaterias } from "../components/ListaMaterias"
 import { useState } from "react"
 import { Alert } from "@mui/material"
 import FormularioMateria from "../components/FormularioMateria"
+import { useAuth } from "../context/useAuth"
 
 export default function Materias() {
 const [actualizar, setActualizar] = useState(0)
 const [materiaEditar, setMateriaEditar] = useState(null)
 const [aviso, setAviso] = useState(null)
+const { usuario } = useAuth()
 
 function operacionExitosa(mensaje) {
   setActualizar(valor => valor + 1)
@@ -39,11 +41,13 @@ return (
       {aviso.mensaje}
     </Alert>
    )}
+   {usuario?.rol === "admin" && (
    <FormularioMateria key={materiaEditar?.codigo ?? "nuevo"}
    onMateriaGuardada={materiaGuardada}
    materiaEditar={materiaEditar}
    onCancelar={() => setMateriaEditar(null)}
    />
+   )}
    <ListaMaterias
    actualizar={actualizar}
    onMateriaEliminada={materiaEliminada}

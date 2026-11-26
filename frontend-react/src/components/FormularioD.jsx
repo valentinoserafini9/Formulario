@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Alert, Box, Button, Paper, TextField, Typography } from "@mui/material"
-const API_DOCENTES = "http://localhost:3000/docentes"
+import API_URL from "../config/api"
+const API_DOCENTES = `${API_URL}/docentes`
 
 function FormularioD({ onDocenteCreado, docenteEditar, onCancelar }){
     const [formulario, setFormulario] = useState({

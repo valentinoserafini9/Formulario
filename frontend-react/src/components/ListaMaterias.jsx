@@ -2,13 +2,14 @@ import { useEffect, useState } from "react"
 import { Alert, Box, Button, Chip, Paper, Stack, Typography } from "@mui/material"
 import { useAuth } from "../context/useAuth"
 
-const API_MATERIAS = "http://localhost:3000/materias"
+import API_URL from "../config/api"
+const API_MATERIAS = `${API_URL}/materias`
 
 export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria, onError }) {
     const [materias, setMaterias] = useState([])
     const [cargando, setCargando] = useState(true)
     const [error, setError] = useState("")
-    const { token } = useAuth()
+    const { token, usuario } = useAuth()
 
     async function eliminarMateria(materia){
         const confirmar = window.confirm(`¿Seguro que querés eliminar la materia ${materia.codigo} - ${materia.nombre}?`)
@@ -59,7 +60,7 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria,
             }
         }
         cargarMaterias()
-    }, [actualizar])
+    }, [actualizar, token])
 
     if (cargando) {
         return (
@@ -135,6 +136,7 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria,
                                     />
                                 </Stack>
                                 <Stack direction="row" spacing={1} sx={{ justifyContent: "flex-end" }}>
+                                    {usuario?.rol === "admin" && (
                                     <Button
                                         type="button"
                                         onClick={() => onEditarMateria(materia)}
@@ -143,6 +145,8 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria,
                                     >
                                         Editar
                                     </Button>
+                                    )}
+                                    {usuario?.rol === "admin" && (
                                     <Button
                                         type="button"
                                         onClick={() => eliminarMateria(materia)}
@@ -152,6 +156,7 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria,
                                     >
                                         Eliminar
                                     </Button>
+                                    )}
                                 </Stack>
                             </Paper>
                         ))}
