@@ -2,7 +2,6 @@ import { useState } from "react";
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
-import MenuItem from "@mui/material/MenuItem"
 import Paper from "@mui/material/Paper"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
@@ -15,8 +14,7 @@ function FormularioCurso({ onCursoCreado, cursoEditar, onCancelar }){
         codigo: cursoEditar?.codigo ?? "",
         nombre: cursoEditar?.nombre ?? "",
         descripcion: cursoEditar?.descripcion ?? "",
-        capacidad: String(cursoEditar?.capacidad ?? ""),
-        estado: cursoEditar?.estado ?? "Activo"
+        duracion: String(cursoEditar?.duracion ?? "")
     })
     const [error, setError] = useState("")
     const [guardando, setGuardando] = useState(false)
@@ -38,7 +36,7 @@ function FormularioCurso({ onCursoCreado, cursoEditar, onCancelar }){
 
     const curso = {
         ...formulario,
-        capacidad: Number(formulario.capacidad)
+        duracion: Number(formulario.duracion)
     }
     const editando = Boolean(cursoEditar)
     const url = editando
@@ -59,8 +57,7 @@ function FormularioCurso({ onCursoCreado, cursoEditar, onCancelar }){
                 codigo: "",
                 nombre: "",
                 descripcion: "",
-                capacidad: "",
-                estado: "Activo"
+                duracion: ""
             })
             onCursoCreado(editando ? "Modificado" : "Creado")
         } catch (error) {
@@ -118,28 +115,15 @@ function FormularioCurso({ onCursoCreado, cursoEditar, onCancelar }){
                     fullWidth
                 />
                 <TextField
-                    id="capacidad"
-                    name="capacidad"
-                    label="Capacidad"
+                    id="duracion"
+                    name="duracion"
+                    label="Duración (horas)"
                     type="number"
-                    value={formulario.capacidad}
+                    value={formulario.duracion}
                     onChange={manejarCambio}
                     required
                     fullWidth
                 />
-                <TextField
-                    id="estado"
-                    name="estado"
-                    label="Estado"
-                    select
-                    value={formulario.estado}
-                    onChange={manejarCambio}
-                    required
-                    fullWidth
-                >
-                    <MenuItem value="Activo">Activo</MenuItem>
-                    <MenuItem value="Inactivo">Inactivo</MenuItem>
-                </TextField>
                 <TextField
                     id="descripcion"
                     name="descripcion"

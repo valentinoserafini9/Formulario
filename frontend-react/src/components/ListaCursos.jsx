@@ -127,15 +127,10 @@ export function ListaCursos({ actualizar, onCursoCreado, onEditarCurso }) {
                                     <Box>
                                         <Typography fontWeight={600}>{curso.nombre}</Typography>
                                         <Typography variant="body2" color="text.secondary">
-                                            Capacidad: {curso.capacidad}
+                                            Duración: {curso.duracion} hs
                                             {curso.descripcion ? ` · ${curso.descripcion}` : ""}
                                         </Typography>
                                     </Box>
-                                    <Chip
-                                        label={curso.estado}
-                                        color={curso.estado === "Activo" ? "success" : "default"}
-                                        size="small"
-                                    />
                                 </Stack>
                                 <Stack direction="row" spacing={1} sx={{ justifyContent: "flex-end" }}>
                                     {usuario?.rol === "admin" && (
