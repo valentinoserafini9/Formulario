@@ -54,12 +54,12 @@ Content-Type: application/json
 }
 
 ###
-POST https://sga-backend-prueba.onrender.com/auth/login
+POST https://sga-backend-prueba-lh77.onrender.com/auth/login
 Content-Type: application/json
 
 {
     "email": "admin@sga.com",
-    "password":"claveDePrueba123!"
+    "password":"claveAdmin123"
 }
 
 ###
